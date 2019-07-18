@@ -98,6 +98,8 @@ class test_weave_pairing_01(unittest.TestCase):
 
         self.use_service_dir = int(os.environ.get("USE_SERVICE_DIR", "0")) == 1
 
+        self.use_weave_id_as_serial_num = int(os.environ.get("USE_WEAVE_ID_AS_SERIAL_NUM", "0")) == 1
+
         if self.topology_setup_required:
             self.topology = thread_wifi_ap_internet_configurable_topology(quiet=self.quiet,
                                                                           fabric_id=self.fabric_id,
@@ -179,6 +181,8 @@ class test_weave_pairing_01(unittest.TestCase):
         options["username"] = self.username
         options["password"] = self.password
         options["tier"] = self.tier
+        options["use_weave_id_as_serial_num"] = self.use_weave_id_as_serial_num
+
         self.weave_pairing = WeavePairing.WeavePairing(options)
         ret = self.weave_pairing.run()
 

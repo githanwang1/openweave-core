@@ -51,7 +51,8 @@ options = {"quiet": False,
            'server_process_tag': "WEAVE-PAIRING-SERVER",
            'mobile_node_id': None,
            'server_node_id': None,
-           'register_cmd': None}
+           'register_cmd': None,
+           'use_weave_id_as_serial_num': False}
 
 def option():
     return options.copy()
@@ -325,6 +326,9 @@ class WeavePairing(HappyNode, HappyNetwork, WeaveTest):
                 + " --software-version " + '"'+ device_info['resource']['software_id'] + '"' \
                 + " --product-id " + device_info['resource']['product_id'] \
                 + " --suppress-ac" # Suppress access controls to work around WEAV-2024
+
+            if self.use_weave_id_as_serial_num:
+                cmd += " --serial-num " + device_info['device_weave_id']
 
             if self.server_node_id is not None:
                 # if the server is a local mock, we need to override the default endpoint id
